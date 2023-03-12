@@ -45,6 +45,13 @@ void home(AccelStepper& stepper) {
   }
   
   /* Find right of sensor */
+  Serial.println("Looking for right sensor...");
+  stepper.setSpeed(-HONING_SPEED); // move away from sensor slowly
+  while(digitalRead(ENDSTOP_PIN)) { // keep stepping till sensor deactivated
+          stepper.runSpeed();
+  }
+
+  /* Hone right of sensor */
   Serial.println("Honing right of sensor....");
   stepper.runToNewPosition(-HONING_OFFSET); // move to the right of sensor
 
